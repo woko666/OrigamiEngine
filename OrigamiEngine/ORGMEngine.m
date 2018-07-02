@@ -108,7 +108,7 @@
             return;
         }
 
-        [self setCurrentState:ORGMEngineStatePlaying];
+        [self setCurrentState:ORGMEngineStateBuffering];
         dispatch_source_merge_data([ORGMQueues buffering_source], 1);
     });
 }
@@ -124,6 +124,13 @@
 
     [_output pause];
     [self setCurrentState:ORGMEngineStatePaused];
+}
+
+- (void)pauseResume {
+    if (_currentState == ORGMEngineStatePlaying)
+        [self pause];
+    else if (_currentState == ORGMEngineStatePaused)
+        [self resume];
 }
 
 - (void)resume {
@@ -197,7 +204,7 @@
         });
     } else if ([keyPath isEqualToString:@"endOfInput"]) {
         NSURL *nextUrl = [_delegate engineExpectsNextUrl:self];
-        if (!nextUrl) {
+        if (!nextUrl || [nextUrl.scheme isEqualToString:@"null"]) {
             [self setCurrentState:ORGMEngineStateStopped];
             return;
         }
@@ -212,6 +219,9 @@
     dispatch_source_set_event_handler([ORGMQueues buffering_source], ^{
         [_input process];
         [_converter process];
+        if (_currentState == ORGMEngineStateBuffering) {
+            [self setCurrentState:ORGMEngineStatePlaying];
+        }
     });
 }
 

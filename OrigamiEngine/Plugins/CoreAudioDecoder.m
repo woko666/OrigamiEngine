@@ -314,7 +314,7 @@ static OSStatus audioFile_ReadProc(void *inClientData,
     id<ORGMSource> source = inClientData;
 
     // Skip potential id3v1 tags over HTTP connection
-    if ([NSStringFromClass([source class]) isEqualToString:@"HTTPSource"] &&
+    if (//[NSStringFromClass([source class]) isEqualToString:@"HTTPSource"] &&
         [source size] - inPosition == ID3V1_SIZE) {
 
         *actualCount = ID3V1_SIZE;

@@ -31,6 +31,7 @@
  */
 typedef enum : NSInteger {
     ORGMEngineStateStopped,
+    ORGMEngineStateBuffering,
     ORGMEngineStatePlaying,
     ORGMEngineStatePaused,
     ORGMEngineStateError
@@ -88,6 +89,8 @@ typedef enum : NSInteger {
  @discussion This method will pause only output processing, decoding and converting will be still active. Only have effect during the `ORGMEngineStatePlaying` state.
  */
 - (void)pause;
+
+- (void)pauseResume;
 
 /**
  Resumes the playback.
