@@ -188,6 +188,9 @@ const NSTimeInterval readTimeout = 1.0;
         }
     }
 
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    
     self.fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];
 }
 
