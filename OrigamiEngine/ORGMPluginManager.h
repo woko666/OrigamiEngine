@@ -50,6 +50,8 @@
  */
 - (id<ORGMSource>)sourceForURL:(NSURL *)url error:(NSError **)error;
 
+- (void)addSource:(NSString *)scheme clazz:(Class)clazz;
+
 /**
  Factory method for decoder plugins.
  

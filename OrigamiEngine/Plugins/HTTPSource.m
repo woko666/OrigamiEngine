@@ -178,6 +178,10 @@ const NSTimeInterval readTimeout = 1.0;
     }
 
     NSString *filePath = [dataPath stringByAppendingPathComponent:fileName];
+    
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
+    
     if (![defaultFileManger fileExistsAtPath:filePath]) {
         if (![defaultFileManger createFileAtPath:filePath
                                         contents:nil
@@ -187,9 +191,6 @@ const NSTimeInterval readTimeout = 1.0;
                                          userInfo:nil];
         }
     }
-
-    NSError *error = nil;
-    [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
     
     self.fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];
 }

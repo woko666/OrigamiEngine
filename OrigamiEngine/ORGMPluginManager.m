@@ -33,7 +33,7 @@
 #import "M3uContainer.h"
 
 @interface ORGMPluginManager ()
-@property(retain, nonatomic) NSDictionary *sources;
+@property(retain, nonatomic) NSMutableDictionary *sources;
 @property(retain, nonatomic) NSMutableDictionary *decoders;
 @property(retain, nonatomic) NSDictionary *containers;
 @end
@@ -55,7 +55,7 @@
     if (self) {
         
         /* Sources */
-        self.sources = [NSDictionary dictionaryWithObjectsAndKeys:
+        self.sources = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                         [HTTPSource class], [HTTPSource scheme],
                         [HTTPSource class], @"https",
                         [FileSource class], [FileSource scheme],
@@ -116,6 +116,10 @@
         return nil;
     }
 	return [[[source alloc] init] autorelease];
+}
+
+- (void)addSource:(NSString *)scheme clazz:(Class)clazz {
+    [self.sources setObject:clazz forKey:scheme];
 }
 
 - (id<ORGMDecoder>)decoderForSource:(id<ORGMSource>)source error:(NSError **)error {
