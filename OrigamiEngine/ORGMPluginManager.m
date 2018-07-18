@@ -34,6 +34,7 @@
 
 @interface ORGMPluginManager ()
 @property(retain, nonatomic) NSMutableDictionary *sources;
+@property(nonatomic) Class forcedSource;
 @property(retain, nonatomic) NSMutableDictionary *decoders;
 @property(retain, nonatomic) NSDictionary *containers;
 @end
@@ -53,7 +54,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        
+        self.forcedSource = nil;
         /* Sources */
         self.sources = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                         [HTTPSource class], [HTTPSource scheme],
@@ -104,6 +105,8 @@
 
 	NSString *scheme = [url scheme];	
 	Class source = [_sources objectForKey:scheme];
+    if (self.forcedSource != nil)
+        source = self.forcedSource;
 	if (!source) {
         if (error) {
             NSString *message = [NSString stringWithFormat:@"%@ %@",
@@ -120,6 +123,9 @@
 
 - (void)addSource:(NSString *)scheme clazz:(Class)clazz {
     [self.sources setObject:clazz forKey:scheme];
+}
+- (void)forceSource:(Class)clazz {
+    self.forcedSource = clazz;
 }
 
 - (id<ORGMDecoder>)decoderForSource:(id<ORGMSource>)source error:(NSError **)error {
