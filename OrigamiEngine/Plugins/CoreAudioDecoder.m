@@ -132,9 +132,9 @@ const int ID3V1_SIZE = 128;
 }
 
 - (void)close {
+    [_source close];
     ExtAudioFileDispose(_in);
     AudioFileClose(_audioFile);
-    [_source close];
 }
 
 #pragma mark - private
