@@ -144,6 +144,9 @@
 - (void)stop {
     dispatch_async([ORGMQueues processing_queue], ^{
         [_input removeObserver:self forKeyPath:@"endOfInput"];
+        if (self.input != nil) {
+            [self.input close];
+        }
         self.output = nil;
         self.input = nil;
         self.converter = nil;
