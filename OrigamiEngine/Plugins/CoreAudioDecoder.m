@@ -105,7 +105,7 @@ const int ID3V1_SIZE = 128;
     self.metadata = [NSMutableDictionary dictionary];
     _source = [source retain];
     OSStatus result = AudioFileOpenWithCallbacks(_source, audioFile_ReadProc, NULL,
-                                                 audioFile_GetSizeProc, NULL, 0,
+                                                 audioFile_GetSizeProc, NULL, [source audioFileTypeHint],
                                                  &_audioFile);
 
     if (noErr != result) {

@@ -228,4 +228,8 @@ const NSTimeInterval readTimeout = 1.0;
     _connectionDidFail = YES;
 }
 
+-(AudioFileTypeID) audioFileTypeHint {
+    return 0;
+}
+
 @end

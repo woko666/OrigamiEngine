@@ -83,6 +83,10 @@
 	}
 }
 
+-(AudioFileTypeID) audioFileTypeHint {
+    return 0;
+}
+
 #pragma mark - private
 
 @end

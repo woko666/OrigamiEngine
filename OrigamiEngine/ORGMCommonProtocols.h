@@ -21,6 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <AudioToolbox/AudioToolbox.h>
+
 /**
  Common domain for the all engine errors
  */
@@ -115,6 +117,11 @@ typedef enum : NSInteger {
  Closes a source file. 
  */
 - (void)close;
+
+/**
+ Returns type of audio file
+*/
+-(AudioFileTypeID) audioFileTypeHint;
 @end
 
 /**
