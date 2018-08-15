@@ -143,7 +143,13 @@
 
 - (void)stop {
     dispatch_async([ORGMQueues processing_queue], ^{
-        [_input removeObserver:self forKeyPath:@"endOfInput"];
+        if (_input != nil) {
+            @try{
+                [_input removeObserver:self forKeyPath:@"endOfInput"];
+            } @catch(id anException){
+                //do nothing, obviously it wasn't attached because an exception was thrown
+            }
+        }
         if (self.input != nil) {
             [self.input close];
         }
