@@ -72,6 +72,8 @@
     if (self.currentState == ORGMEngineStatePlaying) [self stop];
     dispatch_async([ORGMQueues processing_queue], ^{
         self.currentError = nil;
+        
+        [self setCurrentState:ORGMEngineStateBuffering];
 
         ORGMInputUnit *input = [[ORGMInputUnit alloc] init];
         self.input = input;
