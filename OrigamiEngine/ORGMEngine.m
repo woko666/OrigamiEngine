@@ -69,15 +69,14 @@
                                      userInfo:nil];
     }
 
-    if (self.currentState == ORGMEngineStatePlaying) [self stop];
+    /*if (self.currentState == ORGMEngineStatePlaying)*/ [self stop];
     dispatch_async([ORGMQueues processing_queue], ^{
         self.currentError = nil;
-        
-        [self setCurrentState:ORGMEngineStateBuffering];
 
-        ORGMInputUnit *input = [[ORGMInputUnit alloc] init];
-        self.input = input;
-        [input release];
+        [self setCurrentState:ORGMEngineStateBuffering];
+        
+        self.input = [[ORGMInputUnit alloc] init];
+        [_input release];
 
         if (![_input openWithUrl:url]) {
             self.currentState = ORGMEngineStateError;
@@ -93,13 +92,11 @@
 
         ORGMConverter *converter = [[ORGMConverter alloc] initWithInputUnit:_input];
         self.converter = converter;
-        [converter release];
 
         ORGMOutputUnit *output = [[outputUnitClass alloc] initWithConverter:_converter];
         output.outputFormat = _outputFormat;
         self.output = output;
         [_output setVolume:_volume];
-        [output release];
 
         if (![_converter setupWithOutputUnit:_output]) {
             self.currentState = ORGMEngineStateError;
@@ -144,6 +141,9 @@
 }
 
 - (void)stop {
+    if (self.input == nil || self.input == nil || self.converter == nil) {
+        return;
+    }
     dispatch_async([ORGMQueues processing_queue], ^{
         if (_input != nil) {
             @try{
@@ -155,6 +155,9 @@
         if (self.input != nil) {
             [self.input close];
         }
+        [_input release];
+        [_converter release];
+        [_output release];
         self.output = nil;
         self.input = nil;
         self.converter = nil;

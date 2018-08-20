@@ -57,6 +57,9 @@
     [_decoder release];
     [_source release];
     [_data release];
+    self.source = nil;
+    //self.data = nil;
+    self.decoder = nil;
     [super dealloc];
 }
 

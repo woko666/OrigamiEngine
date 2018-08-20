@@ -45,9 +45,10 @@ const int ID3V1_SIZE = 128;
 @implementation CoreAudioDecoder
 
 - (void)dealloc {
-    [self close];
-    [_source release];
+    //[self close];
+    //[_source release];
     [_metadata release];
+    _source = nil;
     [super dealloc];
 }
 
@@ -103,7 +104,7 @@ const int ID3V1_SIZE = 128;
 
 - (BOOL)open:(id<ORGMSource>)source {
     self.metadata = [NSMutableDictionary dictionary];
-    _source = [source retain];
+    _source = source;//[source retain];
     OSStatus result = AudioFileOpenWithCallbacks(_source, audioFile_ReadProc, NULL,
                                                  audioFile_GetSizeProc, NULL, [source audioFileTypeHint],
                                                  &_audioFile);

@@ -118,7 +118,7 @@
         }
         return nil;
     }
-	return [[[source alloc] init] autorelease];
+	return [[source alloc] init];
 }
 
 - (void)addSource:(NSString *)scheme clazz:(Class)clazz {
@@ -152,7 +152,7 @@
         return nil;
 	}
     
-	return [[[decoder alloc] init] autorelease];
+	return [[decoder alloc] init];
 }
 
 - (NSArray *)urlsForContainerURL:(NSURL *)url error:(NSError **)error {
